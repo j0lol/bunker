@@ -148,7 +148,7 @@ const searchElem = document.getElementById('Search_Input');
 
 function searchForPhrase(phrase, replace = false) {
     // if(replace) document.getElementById('Search_Input').value = phrase;
-    window.open(`https://www.google.com/search?q=${phrase}`, '_blank');
+    window.open(`https://duckduckgo.com/?q=${phrase}`, '_blank');
 }
 
 
