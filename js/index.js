@@ -158,3 +158,20 @@ function detectEnter(e) {
             searchForPhrase(document.getElementById('Search_Input').value);
         }
 }
+
+// -------------------------------------------------------------------------
+//  Focus on the search input when pressing anykey if not already focused
+// -------------------------------------------------------------------------
+
+let allowKeyboard = false;
+
+document.addEventListener("keydown", (e) => {
+
+    if(allowKeyboard) return;
+
+    if( e.keyCode === 18 ) {
+        e.preventDefault();
+        toggleVoiceRecognition();   
+    } else document.getElementById('Search_Input')?.focus();
+}, false);
+
