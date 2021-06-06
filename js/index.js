@@ -151,6 +151,13 @@ function searchForPhrase(phrase, replace = false) {
     window.open(`https://duckduckgo.com/?q=${phrase}`, '_blank');
 }
 
+function detectEnter(e) {
+       var code = e.keyCode ? e.keyCode : e.which;
+        if (code === 13) {
+            console.log("13 pressed");
+            searchForPhrase(searchElem.value);
+        }
+}
 
 function prepSearchHandling(e) {
     const searchElem = document.getElementById('Search_Input'); 
