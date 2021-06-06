@@ -148,116 +148,13 @@ const searchElem = document.getElementById('Search_Input');
 
 function searchForPhrase(phrase, replace = false) {
     // if(replace) document.getElementById('Search_Input').value = phrase;
-    window.open(`https://duckduckgo.com/?q=${phrase}`, '_blank');
+    window.open(`https://duckduckgo.com/?q=${phrase}`, '_self');
 }
 
 function detectEnter(e) {
        var code = e.keyCode ? e.keyCode : e.which;
         if (code === 13) {
             console.log("13 pressed");
-            searchForPhrase(searchElem.value);
+            searchForPhrase(document.getElementById('Search_Input').value);
         }
 }
-
-function prepSearchHandling(e) {
-    const searchElem = document.getElementById('Search_Input'); 
-
-    searchElem.addEventListener("keydown", function(event) {
-        if (event.keyCode === 13) {
-            console.log("13 pressed");
-            searchForPhrase(searchElem.value);
-        }
-    });
-}
-
-
-// -------------------------------------------------------------------------
-//  Speech recognition for google search
-// -------------------------------------------------------------------------
-
-var activeSpeech = false;
-var recognitionHandle;
-
-let toggleVoiceRecognition = () => {
-
-    if(!config.voiceReg.enabled) return;
-
-    let elem = document.getElementById('Search_VoiceRecognition');
-
-    if(activeSpeech) {
-        recognitionHandle.stop();
-        elem.innerHTML = '<i class="bi bi-mic"></i>';
-        activeSpeech = false;
-    } else {
-        recognitionHandle.start();
-        elem.innerHTML = '<i class="bi bi-mic-mute"></i>';
-        activeSpeech = true;
-    }
-
-}
-
-// TODO: Fixed buggy toggling on the button
-function prepSpeechRecognition() {
-
-    // Don't init anything if voiceReg is disabled
-    if(!config.voiceReg.enabled) return;
-
-    try {
-        var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        var recognition = new SpeechRecognition();
-        recognition.lang = config.voiceReg.language ?? 'en-US';
-
-        recognitionHandle = recognition;
-    }
-    catch (e) {
-        console.error(e);
-    }
-
-    recognition.onstart = function () {
-        let elem = document.getElementById('Search_VoiceRecognition');
-        elem.innerHTML = '<i class="bi bi-mic-mute"></i>';
-    }
-
-    recognition.onspeechend = function () {
-        let elem = document.getElementById('Search_VoiceRecognition');
-        elem.innerHTML = '<i class="bi bi-mic"></i>';
-        activeSpeech = false;
-    }
-
-    recognition.onerror = function (event) {
-        if (event.error == 'no-speech') {
-            console.log('No speech was detected. Try again.');
-        };
-
-        let elem = document.getElementById('Search_VoiceRecognition');
-        elem.innerHTML = '<i class="bi bi-mic"></i>';
-        activeSpeech = false;
-    }
-
-    recognition.onresult = function (event) {
-        activeSpeech = false;
-        var transcript = event.results[event.resultIndex][0].transcript;
-        console.log(transcript)
-        searchForPhrase(transcript, false);
-    }
-
-    let elem = document.getElementById('Search_VoiceRecognition');
-    elem.onclick = () => toggleVoiceRecognition();
-}
-
-// -------------------------------------------------------------------------
-//  Focus on the search input when pressing anykey if not already focused
-// -------------------------------------------------------------------------
-
-let allowKeyboard = false;
-
-document.addEventListener("keydown", (e) => {
-
-    if(allowKeyboard) return;
-
-    if( e.keyCode === 18 ) {
-        e.preventDefault();
-        toggleVoiceRecognition();   
-    } else document.getElementById('Search_Input')?.focus();
-}, false);
-
