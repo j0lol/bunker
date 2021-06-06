@@ -152,7 +152,7 @@ function SearchBox() {
             <img id="SearchBoxIcon" width="24" src="./media/icons8-google-50.png" alt="Google" />
 
             <div class="blur glass" >
-                    <input id="Search_Input" class="glass---hover" type="text"  />
+                    <input id="Search_Input" class="glass---hover" type="text" onkeyup="detectEnter(event)"/>
             </div>
 
             ${config.voiceReg.enabled && '<button id="Search_VoiceRecognition" class="iconButton"  > <i class="bi bi-mic"></i> </button>'}
