@@ -58,7 +58,7 @@ function Bookmark({ label, url, baseUrl, logoUrl }) {
     ?
     `https://api.faviconkit.com/${safeUrl}/16`
     :
-    `http://www.google.com/s2/favicons?sz=192&domain_url=${logoUrl ?? baseUrl ?? url}`
+    `https://external-content.duckduckgo.com/ip3/${new URL(logoUrl ?? baseUrl ?? url).hostname}.ico`
 
     let target = config.bookmarkOptions.alwaysOpenInNewTab ? '_blank' : '';
     let rel = config.bookmarkOptions.alwaysOpenInNewTab ? 'noopener' : '';
