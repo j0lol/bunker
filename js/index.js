@@ -157,6 +157,7 @@ function prepSearchHandling(e) {
 
     searchElem.addEventListener("keydown", function(event) {
         if (event.keyCode === 13) {
+            console.log("13 pressed");
             searchForPhrase(searchElem.value);
         }
     });
